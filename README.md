@@ -1,61 +1,67 @@
-# Pet_Robot
+# 🐾 Pet Bot Controller with micro-ROS and ESP32
 
-## Introduction
+A simple quadruped pet bot control system built using **ESP32**, **micro-ROS**, and **servo motors**. The bot connects to a Wi-Fi network, subscribes to ROS messages on the `/cmd_vel` topic, and responds with basic movements like **forward trot**, **left turn**, and **right turn** based on Twist message commands.
 
-This project aims to simulate a quadruped robot in Gazebo and control it with keyboard/Joypad commands using ROS2 Humble.
+---
 
-<img src="images/bruno_gazebo.png" width="533"> <img src="images/bruno_rviz.png" width="533">
+## 📜 Project Overview
 
-## Features
+This project implements a ROS-integrated quadruped robot (pet bot) controller using ESP32. It receives velocity commands from a ROS system and controls eight servos (four hip and four knee joints) to perform basic gait movements.
 
-- [x] URDF model of a quadruped robot
-- [x] ROS2 package for simulation and teleoperation
-- [x] Teleoperation node for Virtual Joypad Control
-- [ ] Teleoperation node for keyboard control
-- [x] Launch files for Gazebo simulation and teleoperation :tada:
+---
 
+## 📦 Features
 
-## Dependencies
+- 📡 Connects to Wi-Fi for ROS communication via micro-ROS.
+- 📥 Subscribes to `/cmd_vel` topic (geometry_msgs/Twist).
+- 🦿 Controls 8 servos: 4 hip joints and 4 knee joints.
+- 🏃‍♂️ Implements basic gaits:
+  - Trot forward
+  - Move left
+  - Move right
+  - Neutral stop position
+- 🔄 Adjustable gait speed (via `setSpeed()` function).
 
-- OS: Ubuntu Linux 22.04 Jammy Jellyfish
-- ROS Version: ROS2 Humble
-- Python3
+---
 
-## Instruction to run the simulation
+## 🖥️ Tech Stack
 
-Follow the steps below to setup the repository:
+- **ESP32**
+- **Arduino IDE**
+- **micro-ROS**
+- **geometry_msgs/Twist**
+- **ESP32Servo Library**
 
-```bash
-# source ROS2 and Build the workspace
-source /opt/ros/galactic/setup.bash
-# Create a workspace
-mkdir -p ~/petbot_ws/src
-cd petbot_ws/src
-# Clone the repository in the workspace
-git clone https://github.com/swikarthanekar/Pet_RoBot.git
-# Install the dependencies
-cd ~/petbot_ws
-rosdep install -i --from-path src --rosdistro humble -y
-# build the workspace
-colcon build --symlink-install
-```
-To run the simulation open the terminal and follow the below steps:
+---
 
-```bash
-# source ROS2
-source /opt/ros/galactic/setup.bash
-# Source the workspace
-cd ~/petbot_ws
-source install/setup.bash
-# Run the launch file
-ros2 launch petbot debug.launch.py
-```
-Open another terminal to launch the virtual Joypad Node for teleoperation:
+## 📌 Wiring Overview
 
-```bash
-# source ROS2
-source /opt/ros/galactic/setup.bash
-# Launch the Joypad
-cd ~/petbot_ws/src/UI
-python3 controller.py
-```
+| Servo | Function          | Pin |
+|:-------|:------------------|:-----|
+| 0-3     | Hip joints (FL, RR, FR, RL) | 25, 26, 27, 14 |
+| 4-7     | Knee joints (FL, RR, FR, RL) | 33, 32, 15, 4 |
+
+---
+
+## 🚀 How It Works
+
+1. ESP32 connects to the Wi-Fi network using credentials.
+2. micro-ROS initializes and subscribes to `/cmd_vel`.
+3. When a Twist message arrives:
+   - `linear.x > 0`: Trot forward.
+   - `linear.y > 0`: Move left.
+   - `linear.y < 0`: Move right.
+   - Else: Set all servos to neutral (90°).
+4. Movements are executed via servo position adjustments.
+
+---
+
+## 📶 Wi-Fi & micro-ROS Setup
+
+Update these credentials inside `pet_bot_4.cpp`:
+
+```cpp
+char wifi_ssid[] = "Your_SSID";
+char wifi_password[] = "Your_Password";
+char wifi_ip[] = "192.168.0.10";
+uint16_t wifi_port = 8888;
