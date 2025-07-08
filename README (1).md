@@ -1,4 +1,4 @@
-# Bruno_Quadruped_Sim
+# Pet_Robot
 
 ## Introduction
 
@@ -29,12 +29,12 @@ Follow the steps below to setup the repository:
 # source ROS2 and Build the workspace
 source /opt/ros/galactic/setup.bash
 # Create a workspace
-mkdir -p ~/bruno_ws/src
-cd bruno_ws/src
+mkdir -p ~/petbot_ws/src
+cd petbot_ws/src
 # Clone the repository in the workspace
-git clone https://github.com/MayankD409/Bruno_Quadruped_Sim.git
+git clone https://github.com/swikarthanekar/Pet_RoBot.git
 # Install the dependencies
-cd ~/bruno_ws
+cd ~/petbot_ws
 rosdep install -i --from-path src --rosdistro humble -y
 # build the workspace
 colcon build --symlink-install
@@ -45,10 +45,10 @@ To run the simulation open the terminal and follow the below steps:
 # source ROS2
 source /opt/ros/galactic/setup.bash
 # Source the workspace
-cd ~/bruno_ws
+cd ~/petbot_ws
 source install/setup.bash
 # Run the launch file
-ros2 launch bruno debug.launch.py
+ros2 launch petbot debug.launch.py
 ```
 Open another terminal to launch the virtual Joypad Node for teleoperation:
 
@@ -56,6 +56,6 @@ Open another terminal to launch the virtual Joypad Node for teleoperation:
 # source ROS2
 source /opt/ros/galactic/setup.bash
 # Launch the Joypad
-cd ~/bruno_ws/src/UI
+cd ~/petbot_ws/src/UI
 python3 controller.py
 ```
