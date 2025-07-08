@@ -1,5 +1,3 @@
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-
 # Bruno_Quadruped_Sim
 
 ## Introduction
@@ -61,10 +59,3 @@ source /opt/ros/galactic/setup.bash
 cd ~/bruno_ws/src/UI
 python3 controller.py
 ```
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-
-
